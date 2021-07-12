@@ -10,13 +10,13 @@ import androidx.sqlite.db.SupportSQLiteQuery
 @Dao
 interface TaskDao {
 
-    @Query ("select * from tasks")
+    @RawQuery (observedEntities = [Task::class])
     fun getTasks(query: SupportSQLiteQuery): DataSource.Factory<Int, Task>
 
     @Query ("select * from tasks where id = :taskId")
     fun getTaskById(taskId: Int): LiveData<Task>
 
-    @Query ("select dueDate from tasks")
+    @Query ("select * from tasks where completed = 0 order by dueDate")
     fun getNearestActiveTask(): Task
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
