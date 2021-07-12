@@ -2,13 +2,12 @@ package com.dicoding.todoapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
 
 //TODO 2 : Define data access object (DAO)
+
+@Dao
 interface TaskDao {
 
     @Query ("select * from tasks")
