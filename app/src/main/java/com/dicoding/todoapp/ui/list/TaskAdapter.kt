@@ -34,20 +34,20 @@ class TaskAdapter(
             //TODO 10 : Display title based on status using TitleTextView
             task.isCompleted -> {
                 //DONE
-                val doneTask : TaskTitleView
-                //doneTask.state
+                val doneTask = TaskTitleView.DONE
+                holder.tvTitle.state = doneTask
                 holder.cbComplete.isChecked = true
             }
             task.dueDateMillis < System.currentTimeMillis() -> {
                 //OVERDUE
-                val overdueTask : TaskTitleView
-                //overdueTask.state
+                val overdueTask = TaskTitleView.OVERDUE
+                holder.tvTitle.state = overdueTask
                 holder.cbComplete.isChecked = false
             }
             else -> {
                 //NORMAL
-                val normalTask : TaskTitleView
-                //normalTask.state
+                val normalTask = TaskTitleView.NORMAL
+                holder.tvTitle.state = normalTask
                 holder.cbComplete.isChecked = false
             }
         }
