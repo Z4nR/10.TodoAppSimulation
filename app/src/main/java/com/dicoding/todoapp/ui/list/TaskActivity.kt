@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.todoapp.R
 import com.dicoding.todoapp.data.Task
@@ -38,6 +39,11 @@ class TaskActivity : AppCompatActivity() {
         }
 
         //TODO 6 : Initiate RecyclerView with LayoutManager
+        recycler = findViewById(R.id.rv_task)
+        recycler.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            setHasFixedSize(true)
+        }
 
         initAction()
 
@@ -51,6 +57,12 @@ class TaskActivity : AppCompatActivity() {
 
     private fun showRecyclerView(task: PagedList<Task>) {
         //TODO 7 : Submit pagedList to adapter and update database when onCheckChange
+        val adapter = TaskAdapter { it, isChecked ->
+            taskViewModel.completeTask(it, isChecked)
+        }
+        adapter.submitList(task)
+        adapter.notifyDataSetChanged()
+        recycler.adapter = adapter
     }
 
     private fun showSnackBar(eventMessage: Event<Int>) {
