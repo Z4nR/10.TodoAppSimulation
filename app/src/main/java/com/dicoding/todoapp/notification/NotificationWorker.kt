@@ -16,7 +16,6 @@ import com.dicoding.todoapp.R
 import com.dicoding.todoapp.data.Task
 import com.dicoding.todoapp.data.TaskRepository
 import com.dicoding.todoapp.ui.detail.DetailTaskActivity
-import com.dicoding.todoapp.ui.list.TaskActivity
 import com.dicoding.todoapp.utils.NOTIFICATION_CHANNEL_ID
 import com.dicoding.todoapp.utils.TASK_ID
 
@@ -37,11 +36,8 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
     override fun doWork(): Result {
         //TODO 14 : If notification preference on, get nearest active task from repository and show notification with pending intent
         val nearestActiveTask = TaskRepository.getInstance(applicationContext).getNearestActiveTask()
-        getPendingIntent(nearestActiveTask)
         val channelID = "Channel_1"
         val idRepeating = 101
-        val intent = Intent(applicationContext, TaskActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationManagerCompat =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -49,9 +45,10 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
         val builder = NotificationCompat.Builder(applicationContext, channelID)
             .setSmallIcon(R.drawable.ic_date)
             .setContentTitle("You Have To Do Now")
+            .setContentText(nearestActiveTask.title)
             .setColor(ContextCompat.getColor(applicationContext, android.R.color.transparent))
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
-            .setContentIntent(pendingIntent)
+            .setContentIntent(getPendingIntent(nearestActiveTask))
             .setSound(alarmSound)
             .setAutoCancel(true)
             .setOngoing(true)

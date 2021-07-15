@@ -19,6 +19,7 @@ class TaskActivityTest {
 
     private val fakeTitle : String = "Lorem Ipsum"
     private val fakeDesc : String = "Awkakwkakwk"
+    private val fakeDate : String = "15/07/2021"
 
     @Before
     fun setUp() {
@@ -31,6 +32,14 @@ class TaskActivityTest {
             .check(matches(isDisplayed()))
         onView(withId(R.id.fab))
             .perform(ViewActions.click())
+        onView(withId(R.id.add_ed_title))
+            .perform(ViewActions.typeText(fakeTitle))
+        onView(withId(R.id.add_ed_description))
+            .perform(ViewActions.typeText(fakeDesc), ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.add_tv_due_date))
+            .perform(ViewActions.click(), ViewActions.pressBack())
+        onView(withId(R.id.action_save))
+            .perform(ViewActions.click(), ViewActions.pressBack())
     }
 
 }
