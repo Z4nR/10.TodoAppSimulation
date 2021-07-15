@@ -37,6 +37,12 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
 
     override fun doWork(): Result {
         //TODO 14 : If notification preference on, get nearest active task from repository and show notification with pending intent
+        showNotifTask()
+
+        return Result.success()
+    }
+
+    private fun showNotifTask() {
         val tasksDB = TaskDatabase.getInstance(applicationContext)
         val tasksDao = tasksDB.taskDao()
         val nearestActiveTask = TaskRepository(tasksDao).getNearestActiveTask()
@@ -65,8 +71,6 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
 
         val notification = builder.build()
         notificationManager.notify(idRepeating, notification)
-
-        return Result.success()
     }
 
 }
