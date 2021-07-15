@@ -17,10 +17,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class TaskActivityTest {
 
-    private val fakeTitle : String = "Lorem Ipsum"
-    private val fakeDesc : String = "Awkakwkakwk"
-    private val fakeDate : String = "15/07/2021"
-
     @Before
     fun setUp() {
         ActivityScenario.launch(TaskActivity::class.java)
@@ -33,13 +29,13 @@ class TaskActivityTest {
         onView(withId(R.id.fab))
             .perform(ViewActions.click())
         onView(withId(R.id.add_ed_title))
-            .perform(ViewActions.typeText(fakeTitle))
+            .check(matches(isDisplayed()))
         onView(withId(R.id.add_ed_description))
-            .perform(ViewActions.typeText(fakeDesc), ViewActions.closeSoftKeyboard())
+            .check(matches(isDisplayed()))
         onView(withId(R.id.add_tv_due_date))
-            .perform(ViewActions.click(), ViewActions.pressBack())
+            .check(matches(isDisplayed()))
         onView(withId(R.id.action_save))
-            .perform(ViewActions.click(), ViewActions.pressBack())
+            .check(matches(isDisplayed()))
     }
 
 }
