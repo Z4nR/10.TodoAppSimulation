@@ -20,14 +20,17 @@ class AddTaskActivity : AppCompatActivity(), DatePickerFragment.DialogDateListen
 
     private lateinit var addTaskViewModel: AddTaskViewModel
 
-    private var taskTitle : EditText = findViewById(R.id.add_ed_title)
-    private var taskDesc : EditText = findViewById(R.id.add_ed_description)
+    private lateinit var taskTitle : EditText
+    private lateinit var taskDesc : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_task)
 
         supportActionBar?.title = getString(R.string.add_task)
+
+        taskTitle = findViewById(R.id.add_ed_title)
+        taskDesc = findViewById(R.id.add_ed_description)
 
         val addTaskFactory = ViewModelFactory.getInstance(this)
         addTaskViewModel = ViewModelProvider(this, addTaskFactory)[AddTaskViewModel::class.java]
